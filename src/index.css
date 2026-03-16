@@ -35,6 +35,39 @@ a:hover { text-shadow: 0 0 10px var(--neon-blue); }
 .bg-glow-red { position: fixed; top: -20%; right: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(255,42,42,0.12) 0%, transparent 65%); pointer-events: none; z-index: 0; }
 .bg-glow-blue { position: fixed; bottom: -20%; left: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 65%); pointer-events: none; z-index: 0; }
 
+/* Dynamic Background Styles */
+.hero-bg-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hero-bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: ken-burns 20s infinite alternate linear;
+}
+
+.hero-bg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(5, 5, 8, 0.9) 0%, rgba(5, 5, 8, 0.7) 50%, rgba(5, 5, 8, 0.4) 100%);
+  z-index: 1;
+}
+
+@keyframes ken-burns {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.1) translate(-2%, -2%); }
+}
+
 .glass-panel { background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05); }
 
 .glitch { position: relative; color: white; }
@@ -87,8 +120,8 @@ a:hover { text-shadow: 0 0 10px var(--neon-blue); }
 .scan-line { position: absolute; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(0,212,255,0.4), transparent); animation: scan 4s linear infinite; pointer-events: none; }
 
 /* ===== GRIDS ===== */
-.hero-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 2rem; }
-.hero-canvas { width: 100%; height: 500px; overflow: hidden; }
+.hero-grid { display: grid; grid-template-columns: 1fr; align-items: center; gap: 2rem; position: relative; z-index: 2; }
+.hero-canvas { display: none; }
 
 .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
 .highlights-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }

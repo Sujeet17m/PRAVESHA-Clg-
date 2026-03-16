@@ -21,37 +21,79 @@ const studentCoordinators = [
 ];
 
 const PersonRow = ({ name, phone, color }: { name: string; phone: string; color: string }) => (
-  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem 1rem', padding: '0.9rem 1.25rem', borderRadius: '10px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', transition: 'background 0.2s', position: 'relative', minHeight: '3.5rem' }}
-    onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.06)')}
-    onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.03)')}
+  <div 
+    className="person-row"
+    style={{ 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'space-between', 
+      gap: '0.75rem', 
+      padding: '0.8rem 1rem', 
+      borderRadius: '12px', 
+      background: 'rgba(255,255,255,0.03)', 
+      border: '1px solid rgba(255,255,255,0.06)', 
+      transition: 'all 0.2s', 
+      width: '100%',
+      boxSizing: 'border-box'
+    }}
   >
-    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flex: '1' }}>
-      <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: color, flexShrink: 0 }} />
-      <span style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>{name}</span>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flex: '1', minWidth: 0 }}>
+      <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: color, flexShrink: 0, boxShadow: `0 0 10px ${color}80` }} />
+      <span style={{ 
+        fontSize: 'clamp(0.9rem, 1.1vw, 1rem)', 
+        fontWeight: 600, 
+        color: 'var(--text-primary)', 
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap'
+      }}>
+        {name}
+      </span>
     </div>
     <a href={`tel:${phone}`} style={{ 
-      display: 'flex', alignItems: 'center', gap: '0.6rem', color, 
-      fontFamily: 'Orbitron', fontSize: 'clamp(0.74rem, 2.2vw, 0.85rem)', letterSpacing: '0.5px',
-      fontWeight: 700, background: `${color}10`, padding: '0.3rem 0.6rem', borderRadius: '6px', border: `1px solid ${color}20`,
-      transition: 'all 0.2s', whiteSpace: 'nowrap'
+      display: 'flex', 
+      alignItems: 'center', 
+      gap: '0.5rem', 
+      color, 
+      fontFamily: 'Orbitron', 
+      fontSize: 'clamp(0.7rem, 2vw, 0.85rem)', 
+      letterSpacing: '0.5px',
+      fontWeight: 700, 
+      background: `${color}10`, 
+      padding: '0.4rem 0.75rem', 
+      borderRadius: '8px', 
+      border: `1px solid ${color}25`,
+      transition: 'all 0.2s', 
+      whiteSpace: 'nowrap',
+      flexShrink: 0
     }}>
-      <Phone size={13} style={{ opacity: 0.8 }} /> {phone}
+      <Phone size={14} style={{ opacity: 0.9 }} />
+      <span>{phone}</span>
     </a>
   </div>
 );
 
 const CoordCard = ({ title, icon: Icon, color, people, cardRef }: any) => (
   <div ref={cardRef} className="glass-panel"
-    style={{ opacity: 0, padding: '2.5rem', borderColor: `${color}22`, position: 'relative', overflow: 'hidden' }}
+    style={{ 
+      opacity: 0, 
+      padding: 'clamp(1.25rem, 3vw, 2.5rem)', 
+      borderColor: `${color}33`, 
+      position: 'relative', 
+      overflow: 'hidden',
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column'
+    }}
   >
     <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: `linear-gradient(90deg, transparent, ${color}, transparent)` }} />
     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.75rem' }}>
-      <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: `${color}15`, border: `1px solid ${color}30`, display: 'flex', alignItems: 'center', justifyContent: 'center', color }}>
+      <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: `${color}15`, border: `1px solid ${color}30`, display: 'flex', alignItems: 'center', justifyContent: 'center', color, flexShrink: 0 }}>
         <Icon size={24} />
       </div>
-      <h3 style={{ fontSize: '1.3rem', margin: 0 }}>{title}</h3>
+      <h3 style={{ fontSize: 'clamp(1.1rem, 2vw, 1.3rem)', margin: 0, color: 'white' }}>{title}</h3>
     </div>
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', flex: 1 }}>
       {people.map((p: any) => <PersonRow key={p.name} {...p} color={color} />)}
     </div>
   </div>
@@ -84,8 +126,12 @@ const Coordinators: React.FC = () => {
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem' }}>Get in touch with our coordinators for any queries.</p>
         </div>
         <div className="coords-grid">
-          <CoordCard title="STAFF COORDINATORS" icon={GraduationCap} color="var(--neon-red)" people={staffCoordinators} cardRef={card1Ref} />
-          <CoordCard title="STUDENT COORDINATORS" icon={UserCircle} color="var(--neon-blue)" people={studentCoordinators} cardRef={card2Ref} />
+          <div style={{ height: '100%' }}>
+            <CoordCard title="STAFF COORDINATORS" icon={GraduationCap} color="var(--neon-red)" people={staffCoordinators} cardRef={card1Ref} />
+          </div>
+          <div style={{ height: '100%' }}>
+            <CoordCard title="STUDENT COORDINATORS" icon={UserCircle} color="var(--neon-blue)" people={studentCoordinators} cardRef={card2Ref} />
+          </div>
         </div>
       </div>
     </section>
